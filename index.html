@@ -311,42 +311,131 @@
   <h1>Pengembangan dan Pencarian Web</h1>
 
 <h4 id="crawling_web">Crawling Web<a class="headerlink" href="#crawling_web" title="Permanent link">&para;</a></h4>
-<p>Crawling merupakan proses untuk mendapatkan suatu data dari suatu web. Berikut Merupakan  contoh code crawling data text dari web.</p>
+<p>Crawling merupakan proses untuk mendapatkan suatu data dari suatu web. Berikut Merupakan  contoh code crawling data text dari web. Sebelum menjalakan program harus menginstall scrapy di cmd dengan kode seperti dibawah ini.</p>
+<div class="codehilite"><pre><span></span><code>pip install scrapy
+</code></pre></div>
+
+<p>setelah itu, masuk ke direktori kemudian jalankan kode berikut untuk membuat projek baru.</p>
+<div class="codehilite"><pre><span></span><code>scrapy startproject pta
+</code></pre></div>
+
+<p>setelah folder selesai. membuat import scrapy dan class</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
-<span class="kn">import</span> <span class="nn">json</span>
 
-<span class="k">class</span> <span class="nc">Pta</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;pta&quot;</span>
-    <span class="n">file_json</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;url.json&quot;</span><span class="p">)</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_json</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-    <span class="n">urls</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">start_urls</span><span class="p">)):</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">start_urls</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;url&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;quotes&quot;</span>
 
     <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">urls</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+        <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/060411100755&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100102&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/050411100662&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100014&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100041&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100012&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100170&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/050411100558&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100133&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100010&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100086&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100052&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/060411100818&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100125&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100029&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100007&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100126&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100109&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100083&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100092&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/040411100468&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/040411100476&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/040411100480&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100070&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100115&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100124&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100072&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100152&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100114&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100036&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100083&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100102&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/050411100538&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100011&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100158&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100002&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100062&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100155&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/050411100614&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/050411100566&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/050411100651&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100119&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100113&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100136&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100023&quot;</span><span class="p">,</span>\
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100120&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100143&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100037&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100079&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100050&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100029&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/060411100824&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/060411100772&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100001&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/060411100801&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100078&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100081&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100042&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/070411100129&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;https://pta.trunojoyo.ac.id/welcome/detail/080411100003&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="c1"># print(response.url)</span>
+        <span class="k">yield</span><span class="p">{</span>
+        <span class="s1">&#39;Judul&#39;</span> <span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; ::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
+        <span class="s1">&#39;Penulis&#39;</span> <span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; div:nth-child(2) &gt; ::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
+        <span class="s1">&#39;Abstrak&#39;</span> <span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content_journal &gt; ul &gt; li &gt; div:nth-child(4) &gt; div:nth-child(2) &gt; ::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
+        <span class="s1">&#39;Dosbing_1&#39;</span> <span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; div:nth-child(3) &gt; ::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
+        <span class="s1">&#39;Dosbing_2&#39;</span> <span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; div:nth-child(4) &gt; ::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
 
-        <span class="k">for</span> <span class="n">jurnal</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content_journal &gt; ul &gt; li&#39;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;Judul&#39;</span><span class="p">:</span><span class="n">jurnal</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div:nth-child(2) &gt; a::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
-                <span class="s1">&#39;Penulis&#39;</span><span class="p">:</span><span class="n">jurnal</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div:nth-child(2) &gt; div:nth-child(2) &gt; span::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">10</span><span class="p">:],</span>
-                <span class="s1">&#39;Dosbing_1&#39;</span><span class="p">:</span><span class="n">jurnal</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div:nth-child(2) &gt; div:nth-child(3) &gt; span::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">21</span><span class="p">:],</span>
-                <span class="s1">&#39;Dosbing_2&#39;</span><span class="p">:</span><span class="n">jurnal</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div:nth-child(2) &gt; div:nth-child(4) &gt; span::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">22</span><span class="p">:],</span>
-                <span class="s1">&#39;Abstrak_indo&#39;</span><span class="p">:</span><span class="n">jurnal</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div:nth-child(4) &gt; div:nth-child(2) &gt; p::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
-            <span class="p">}</span>
+        <span class="p">}</span>
+</code></pre></div>
 
-        <span class="c1">#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; a judul</span>
-        <span class="c1">#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; div:nth-child(2) &gt; span mahasiswa</span>
-        <span class="c1">#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; div:nth-child(3) &gt; span dosbing_1</span>
-        <span class="c1">#content_journal &gt; ul &gt; li &gt; div:nth-child(2) &gt; div:nth-child(4) &gt; span dosbing_2</span>
-        <span class="c1">#content_journal &gt; ul &gt; li &gt; div:nth-child(4) &gt; div:nth-child(2) &gt; p abstract_indo</span>
-        <span class="c1">#content_journal &gt; ul &gt; li &gt; div:nth-child(4) &gt; div:nth-child(4) &gt; p abstract_inggis</span>
+<p>Untuk menjalankan file buka cmd di lokasi file kemudian jalankan kode berikut :</p>
+<div class="codehilite"><pre><span></span><code>scrapy run spider pta.py
+</code></pre></div>
+
+<p>Jika berhasil akan tampil data crawling seperti berikut :</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="s1">&#39;Judul&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Rancang Bangun Sistem Pendukung Keputusan Penentuan Pemberian Bantuan RASKIN Menggunakan Metode SMARTER</span><span class="se">\r\n</span><span class="s1">(Studi Kasus : Kecamatan Batuan Kabupaten Sumenep)</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="w"> </span><span class="s1">&#39;Penulis&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Penulis : Ayu Winda Istara&#39;</span><span class="p">],</span><span class="w"> </span><span class="s1">&#39;Abstrak&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Seiring dengan perubahan dalam paradigma pembangunan ekonomi yang tidak berfokus dalam penanggulangan masalah kemiskinan, maka sudah sepantasnya apabila pemerintah dituntut untuk dapat mengentaskan masalah kemiskinan melalui program-program pengentasan kemiskinan. Salah satu dari banyak program pengentasan kemiskinan yang dilaksanakan oleh pemerintah yaitu program RASKIN. Metode yang dipakai dalam penelitian ini adalah SMARTER (Simple Multi Attribute Rating Technique Exploiting Ranks). Metode SMARTER merupakan bagian dari metode Multiple Criteria Decision Making (MCDM). Metode ini dipilih karena metode SMARTER merupakan suatu bentuk model pendukung keputusan yang digunakan dalam pengambilan keputusan dengan kriteria yang beragam yang nantinya dapat digunakan untuk memecahkan masalah pengambilan keputusan. Penelitian yang dilakukan di Kecamatan Batuan, Kabupaten Sumenep ini menggunakan parameter kemiskinan yaitu sumber air minum, berapa kali makan per hari, kemampuan membeli daging, Ayam, susu per minggu, bahan bakar masak, jumlah pakaian baru, sumber penerangan, aset minimal, lapangan pekerjaan, tempat buang air besar, jenis lantai rumah, jenis dinding rumah, luas lantai rumah, kemampuan berobat jika sakit dan ijazah terakhir.  Pada penelitian ini, sistem pendukung keputusan menggunakan metode SMARTER mampu menganalisa kriteria yang nantinya dapat menentukan penduduk mana yang layak menerima bantuan RASKIN. Sistem ini memiliki tingkat akurasi 80,5% jika dibandingkan dengan data rill pada tahun 2012.</span><span class="se">\r\n</span><span class="s1">   </span><span class="se">\r\n</span><span class="s1">Kata Kunci : RASKIN, Sistem Pendukung Keputusan. SMARTER</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">],</span><span class="w"> </span><span class="s1">&#39;Dosbing_1&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Dosen Pembimbing I : Andharini Dwi Cahyani, S.Kom, M.Kom&#39;</span><span class="p">],</span><span class="w"> </span><span class="s1">&#39;Dosbing_2&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Dosen Pembimbing II :Fika Hastarita Rachman, ST, M.Eng&#39;</span><span class="p">]}</span><span class="w"></span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">30</span><span class="w"> </span><span class="mi">02</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">39</span><span class="w"> </span><span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">engine</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Closing</span><span class="w"> </span><span class="n">spider</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span><span class="w"></span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">30</span><span class="w"> </span><span class="mi">02</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">39</span><span class="w"> </span><span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">statscollectors</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Dumping</span><span class="w"> </span><span class="n">Scrapy</span><span class="w"> </span><span class="n">stats</span><span class="p">:</span><span class="w"></span>
+<span class="p">{</span><span class="s1">&#39;downloader/request_bytes&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">33124</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;downloader/request_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;downloader/request_method_count/GET&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;downloader/response_bytes&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">337996</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;downloader/response_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;downloader/response_status_count/200&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;elapsed_time_seconds&#39;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.674581</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;finish_reason&#39;</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;finished&#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;finish_time&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">634021</span><span class="p">),</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;httpcompression/response_bytes&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">1142682</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;httpcompression/response_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;item_scraped_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;log_count/DEBUG&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">129</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;log_count/INFO&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;response_received_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;scheduler/dequeued&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;scheduler/dequeued/memory&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;scheduler/enqueued&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;scheduler/enqueued/memory&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="s1">&#39;start_time&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">959440</span><span class="p">)}</span><span class="w"></span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">30</span><span class="w"> </span><span class="mi">02</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">39</span><span class="w"> </span><span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">engine</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Spider</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>Untuk menyimpan data dalam bentuk csv tinnggal menambakan (-O nama file).csv di cmd seperti berikut:</p>
+<div class="codehilite"><pre><span></span><code>scrapy run spider pta.py -pta.csv
 </code></pre></div>
 
               
